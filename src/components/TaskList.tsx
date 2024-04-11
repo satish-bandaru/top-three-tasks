@@ -1,6 +1,6 @@
 import React from 'react';
 import { Droppable, DragDropContext, DropResult } from 'react-beautiful-dnd';
-import Task, { TaskProps } from './Task';
+import Task from './Task';
 import { TaskType } from '../types';
 
 interface TaskListProps {
