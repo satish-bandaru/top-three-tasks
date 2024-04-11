@@ -40,6 +40,18 @@ function App() {
     chrome.storage.local.set({ topTasks: newTopTasks, backlogTasks: newBacklogTasks });
   };
 
+  const onEditFinished = (taskId: string, newText: string) => {
+    const updatedTopTasks = topTasks.map(task =>
+      task.id === taskId ? { ...task, text: newText } : task);
+    const updatedBacklogTasks = backlogTasks.map(task =>
+      task.id === taskId ? { ...task, text: newText } : task);
+
+    setTopTasks(updatedTopTasks);
+    setBacklogTasks(updatedBacklogTasks);
+
+    chrome.storage.local.set({ topTasks: updatedTopTasks, backlogTasks: updatedBacklogTasks });
+  };
+
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
     if (!destination) {
@@ -115,6 +127,7 @@ function App() {
             sectionId={TaskSection.TOP}
             onToggleCompletion={onToggleCompletion}
             onDelete={onDelete}
+            onEditFinished={onEditFinished}
           />
         </div>
         <div className="task-section">
@@ -124,6 +137,7 @@ function App() {
             sectionId={TaskSection.BACKLOG}
             onToggleCompletion={onToggleCompletion}
             onDelete={onDelete}
+            onEditFinished={onEditFinished}
           />
         </div>
         <div className="add-task-container">

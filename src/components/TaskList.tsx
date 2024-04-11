@@ -8,16 +8,10 @@ interface TaskListProps {
     sectionId: string;
     onToggleCompletion: (taskId: string) => void;
     onDelete: (taskId: string) => void;
+    onEditFinished: (taskId: string, newText: string) => void;
 }
 
-interface TaskListProps {
-    tasks: TaskType[];
-    sectionId: string;
-    onToggleCompletion: (taskId: string) => void;
-    onDelete: (taskId: string) => void;
-}
-
-const TaskList: React.FC<TaskListProps> = ({ tasks, sectionId, onToggleCompletion, onDelete }) => {
+const TaskList: React.FC<TaskListProps> = ({ tasks, sectionId, onToggleCompletion, onDelete, onEditFinished }) => {
     return (
         <Droppable droppableId={sectionId}>
             {(provided) => (
@@ -29,6 +23,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, sectionId, onToggleCompletio
                             index={index}
                             onToggleCompletion={onToggleCompletion}
                             onDelete={onDelete}
+                            onEditFinished={onEditFinished}
                         />
                     ))}
                     {provided.placeholder}
