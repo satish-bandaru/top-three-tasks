@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "ThreeTaskFocus",
+    "version": "1.0.0",
+    "description": "A simple extension to prioritize your top three tasks for the day.",
+    "permissions": [
+        "storage",
+        "tabs"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "options_ui": {
+        "chrome_style": true
+    }
+}
