@@ -3,6 +3,8 @@ import TaskList from './components/TaskList';
 import { TaskType } from './types';
 import { TaskSection } from './constants';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [topTasks, setTopTasks] = useState<TaskType[]>([]);
@@ -55,6 +57,12 @@ function App() {
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
     if (!destination) {
+      return;
+    }
+
+    // Check if trying to add a fourth task to the Top tasks
+    if (destination.droppableId === TaskSection.TOP && topTasks.length >= 3 && source.droppableId !== TaskSection.TOP) {
+      toast.error("Only three top tasks allowed.");
       return;
     }
 
@@ -152,6 +160,7 @@ function App() {
           <button onClick={addTask} className="add-task-button">+</button>
         </div>
       </div>
+      <ToastContainer position="top-center" />
     </DragDropContext>
   );
 }
