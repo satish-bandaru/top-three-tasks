@@ -160,7 +160,7 @@ function App() {
           <button onClick={addTask} className="add-task-button">+</button>
         </div>
       </div>
-      <ToastContainer position="top-center" />
+      <ToastContainer position="bottom-center" />
     </DragDropContext>
   );
 }
