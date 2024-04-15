@@ -7,10 +7,24 @@
         "storage",
         "tabs"
     ],
+    "action": {},
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "dist/js/index.js"
+            ]
+        }
+    ],
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "dist/js/background.js"
     },
     "options_ui": {
         "chrome_style": true
+    },
+    "chrome_url_overrides": {
+        "newtab": "dist/js/index.html"
     }
 }
