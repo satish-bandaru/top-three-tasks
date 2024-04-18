@@ -1,109 +1,307 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Varela&display=swap');
+
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app.light {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+.app.dark {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.dark-theme img {
+  filter: invert(0%);
+}
+
+.light-theme img {
+  filter: invert(100%);
+}
+
 .container {
+  width: 100%;
+  height: 100%;
+}
+
+.body-container {
+  width: 50%;
+  height: 90%;
+  margin: auto;
+  margin-bottom: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.task-section-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-  padding-bottom: 10vh;
+  margin-bottom: 5px;
+}
+
+.h2 {
+  font-size: 25px;
+  text-align: left;
+  font-weight: 700;
 }
 
 .task-section {
-  margin: 20px 0;
+  margin: 5px 0;
   width: 100%;
   text-align: center;
+  align-items: center;
+  min-height: 220px;
 }
 
 .add-task-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
-  padding-top: 20px;
+  opacity: 0.4;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.add-task-container:hover,
+.add-task-container.focused {
+  opacity: 1;
 }
 
 .add-task-input {
-  padding: 10px;
-  font-size: 20px;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  width: 250px;
+  font-size: 16px;
+  font-weight: 400;
+  outline: none;
+  border: none;
+  background: transparent;
+  width: 100%;
   height: 40px;
+  margin-left: 70px;
   margin-right: 10px;
+  font-family: inherit;
 }
 
-.add-task-button {
-  padding: 10px 15px;
-  font-size: 24px;
-  background-color: black;
-  color: white;
+.add-task-input.defocus {
+  padding-top: 10px;
+  padding-left: 0px;
+}
+
+.app.light .add-task-input {
+  color: #333333;
+}
+
+.app.dark .add-task-input {
+  color: #ffffff;
+}
+
+.add-task-input::placeholder {
+  color: #888;
+  opacity: 1;
+}
+
+.task-list {
+  position: relative;
+}
+
+#focus.scrollable-task-list {
+  overflow: hidden;
+}
+
+#defocus.scrollable-task-list {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.collapse-toggle {
+  background: none;
   border: none;
   cursor: pointer;
-  border-radius: 50%;
+  margin-left: 38px;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  color: #888;
+  opacity: 0.3;
+  transition: opacity 0.3s ease-in-out;
 }
 
-.add-task-button:hover {
-  background-color: #333;
+.app.dark .collapse-toggle {
+  color: #fff;
+}
+
+.collapse-toggle:hover {
+  opacity: 1;
+}
+
+.collapse-toggle.Focus {
+  visibility: hidden;
 }
 
 .task-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
+  justify-content: start;
   font-size: 16px;
-  padding: 20px;
-  border-bottom: 1px solid #ccc;
-  height: 40px;
-  position: relative;
+  font-weight: 400;
+  min-height: 40px;
 }
 
 .task-item.completed {
   text-decoration: line-through;
 }
 
-.task-item:last-child {
-  border-bottom: none;
-}
-
-.task-text {
-  flex-grow: 1;
-  margin-left: 10px;
-  margin-right: 30px;
-}
-
-.drag-icon,
-.delete-icon {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-}
-
 .edit-task-input {
-  width: calc(100% - 60px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  flex-grow: 1;
   border: none;
   outline: none;
-  padding: 10px;
   margin-left: 10px;
+  margin-right: 30px;
+  padding: 0;
   font-size: 16px;
+  font-weight: 400;
   background: transparent;
+  text-align: left;
 }
 
 .drag-icon {
+  width: 16px;
+  height: 16px;
+  margin-left: 16px;
+  position: relative;
   visibility: hidden;
-  cursor: grab;
-  left: 0;
+  opacity: 0.7;
+  color: #888;
+}
+
+.delete-icon {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  cursor: pointer;
+  right: 0;
+  visibility: hidden;
+  opacity: 0.7;
+  color: #888;
+}
+
+.app.light .edit-task-input {
+  color: #333333;
+}
+
+.app.dark .edit-task-input {
+  color: #ffffff;
 }
 
 .task-item:hover .drag-icon {
   visibility: visible;
-}
-
-.delete-icon {
-  right: 0;
-  color: red;
-  cursor: pointer;
-  display: none;
+  transition: 0.2s ease-in;
 }
 
 .task-item:hover .delete-icon {
-  display: block;
+  visibility: visible;
+  transition: 0.2s ease-in;
+}
+
+.checkbox {
+  margin-top: 0;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  margin-left: 20px;
+  flex-shrink: 0;
+}
+
+.customization-options {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.icon-button-container {
+  position: relative;
+}
+
+.icon-button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s, background-color 0.3s;
+  opacity: 0.2;
+}
+
+.app.dark .icon-button {
+  background-color: #2C2D31;
+  color: #fff;
+}
+
+.app.light .icon-button:hover {
+  background-color: #f0f0f0;
+  opacity: 1;
+}
+
+.app.dark .icon-button:hover {
+  background-color: #2C2D31;
+  opacity: 1;
+}
+
+.menu {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  background-color: #fff;
+  color: #333333;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.app.light .menu {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+.app.dark .menu {
+  background-color: #2C2D31;
+  color: #fff;
+}
+
+.menu-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.font-option {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  font-size: 12px;
+}
+
+.font-option input[type="radio"] {
+  margin-right: 10px;
 }

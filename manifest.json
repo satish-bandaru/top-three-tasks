@@ -1,16 +1,38 @@
 {
     "manifest_version": 3,
-    "name": "ThreeTaskFocus",
+    "name": "Narrow Focus: New Tab Todo List",
     "version": "1.0.0",
     "description": "A simple extension to prioritize your top three tasks for the day.",
     "permissions": [
         "storage",
-        "tabs"
+        "tabs",
+        "contextMenus"
+    ],
+    "action": {
+        "default_popup": "js/index.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "js/index.js"
+            ]
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "js/contentScript.js"
+            ]
+        }
     ],
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "js/background.js"
     },
-    "options_ui": {
-        "chrome_style": true
+    "chrome_url_overrides": {
+        "newtab": "js/index.html"
     }
 }

@@ -4,13 +4,14 @@ const CopyPlugin = require("copy-webpack-plugin")
 
 module.exports = {
     entry: {
-        index: "./src/index.tsx"
+        index: "./src/index.tsx",
+        contentScript: "./src/contentScript/index.tsx",
     },
     mode: "production",
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
+                test: /\.(tsx|ts)$/,
                 use: [
                     {
                         loader: "ts-loader",
@@ -21,12 +22,15 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-                exclude: /node_modules/,
                 test: /\.css$/i,
                 use: [
                     "style-loader",
                     "css-loader"
                 ]
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                type: 'asset/resource',
             },
         ],
     },
@@ -34,9 +38,10 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 { from: "manifest.json", to: "../manifest.json" },
+                { from: "background.js", to: "background.js" }
             ],
         }),
-        ...getHtmlPlugins(["index"]),
+        ...getHtmlPlugins(["index", "contentScript"]),
     ],
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
@@ -45,13 +50,20 @@ module.exports = {
         path: path.join(__dirname, "dist/js"),
         filename: "[name].js",
     },
+    optimization: {
+        splitChunks: {
+            chunks(chunk) {
+                return chunk.name !== "contentScript";
+            },
+        },
+    },
 };
 
 function getHtmlPlugins(chunks) {
     return chunks.map(
         (chunk) =>
             new HTMLPlugin({
-                title: "React extension",
+                title: "Narrow Focus: New Tab Todo List",
                 filename: `${chunk}.html`,
                 chunks: [chunk],
             })
